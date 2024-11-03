@@ -1,10 +1,8 @@
-module thalaswap_v2_interface::pool {
+module thalaswap_v2::pool {
     use std::option::Option;
 
     use aptos_framework::fungible_asset::{BurnRef, FungibleAsset, Metadata, MintRef, TransferRef};
     use aptos_framework::object::{ExtendRef, Object};
-
-    use aptos_std::smart_vector::SmartVector;
 
     // Defaults
 
@@ -12,10 +10,6 @@ module thalaswap_v2_interface::pool {
     const DEFAULT_SWAP_FEE_PROTOCOL_ALLOCATION_BPS: u64 = 2000;
 
     // Constants
-
-    const LP_TOKEN_DECIMALS: u8 = 8;
-
-    const MAX_SWAP_FEE: u64 = 1000;
 
     /// Maximum number of assets in a stable pool
     /// Factors in this decision:
@@ -41,32 +35,10 @@ module thalaswap_v2_interface::pool {
     /// - Pools with high variance in pool decimals lead to overflows in swap math after normalization
     const MAX_STABLE_DECIMALS_SUPPORTED: u8 = 12;
 
-    /// Reserved liquidity to prevent inflation attack https://docs.openzeppelin.com/contracts/5.x/erc4626#the_attack
-    /// Uniswap V2 does this https://docs.uniswap.org/contracts/v2/concepts/protocol-overview/smart-contracts#minimum-liquidity
-    const MINIMUM_LIQUIDITY: u64 = 100;
-
-    /// A sane upper bound of amp factor so that it cannot go arbitrarily high
-    const MAX_AMP_FACTOR: u64 = 10000;
-
-    const BPS_BASE: u64 = 10000;
-
     const POOL_TYPE_STABLE: u8 = 100;
     const POOL_TYPE_WEIGHTED: u8 = 101;
 
-    ///
-    /// Resources
-    ///
-
-    struct ThalaSwap has key {
-        fees_metadata: vector<Object<Metadata>>,
-        // List of all pools
-        pools: SmartVector<Object<Pool>>,
-
-        /// swap fee in basis points
-        swap_fee_protocol_allocation_bps: u64,
-        /// flashloan fee in basis points
-        flashloan_fee_bps: u64,
-    }
+    // Resources
 
     #[resource_group_member(group = aptos_framework::object::ObjectGroup)]
     struct Pool has key {
@@ -118,14 +90,6 @@ module thalaswap_v2_interface::pool {
         idx_in: u64,
         idx_out: u64,
         swap_fee_bps: u64,
-    }
-
-    ///
-    /// Initialization
-    ///
-
-    fun init_module(_resource_signer: &signer) {
-        abort 0
     }
 
     /// Creates a new weighted pool with specified assets, weights, and swap fee.
@@ -718,7 +682,7 @@ module thalaswap_v2_interface::pool {
 
     #[view]
     public fun oracle_address(_pool_obj: Object<Pool>, _metadata_x: Object<Metadata>, _metadata_y: Object<Metadata>): address {
-        @thalaswap_v2_interface
+        @thalaswap_v2
     }
 
     #[view]
