@@ -1,308 +1,59 @@
 module thalaswap_v1_demo::demo {
-    use std::signer;
 
     use aptos_framework::coin::{Self, Coin};
 
-    use thalaswap_v1_interface::stable_pool::{Self, StablePoolToken};
-    use thalaswap_v1_interface::weighted_pool::{Self, WeightedPoolToken};
-
-    use thalaswap_v1_interface::stable_pool_scripts;
-    use thalaswap_v1_interface::weighted_pool_scripts;
-
-
-    // Weighted Script Methods
-
-    public entry fun create_pool_weighted_entry<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>(
-        user: &signer,
-        in_0: u64,
-        in_1: u64,
-        in_2: u64,
-        in_3: u64
-    ) {
-        weighted_pool_scripts::create_weighted_pool<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>(
-            user,
-            in_0,
-            in_1,
-            in_2,
-            in_3
-        );
-    }
-
-    public fun add_liquidity_weighted_entry<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>(
-        user: &signer,
-        in_0: u64,
-        in_1: u64,
-        in_2: u64,
-        in_3: u64,
-        min_amount_in_0: u64,
-        min_amount_in_1: u64,
-        min_amount_in_2: u64,
-        min_amount_in_3: u64
-    ) {
-        weighted_pool_scripts::add_liquidity<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>(
-            user,
-            in_0,
-            in_1,
-            in_2,
-            in_3,
-            min_amount_in_0,
-            min_amount_in_1,
-            min_amount_in_2,
-            min_amount_in_3
-        );
-    }
-
-    public fun remove_liquidity_weighted_entry<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>(
-        user: &signer,
-        lp_token_in: u64,
-        min_amount_out_0: u64,
-        min_amount_out_1: u64,
-        min_amount_out_2: u64,
-        min_amount_out_3: u64,
-    ) {
-        weighted_pool_scripts::remove_liquidity<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>(
-            user,
-            lp_token_in,
-            min_amount_out_0,
-            min_amount_out_1,
-            min_amount_out_2,
-            min_amount_out_3
-        );
-    }
-
-    public fun swap_exact_in_weighted_entry<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3, X, Y>(
-        user: &signer,
-        amount_in: u64,
-        min_amount_out: u64,
-    ) {
-        weighted_pool_scripts::swap_exact_in<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3, X, Y>(
-            user,
-            amount_in,
-            min_amount_out
-        );
-    }
-
-    public fun swap_exact_out_weighted_entry<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3, X, Y>(
-        user: &signer,
-        max_amount_in: u64,
-        amount_out: u64,
-    ) {
-        weighted_pool_scripts::swap_exact_out<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3, X, Y>(
-            user,
-            max_amount_in,
-            amount_out
-        );
-    }
-
-    // Stable Script Methods
-
-    public entry fun create_pool_stable_entry<Asset0, Asset1, Asset2, Asset3>(
-        user: &signer,
-        in_0: u64,
-        in_1: u64,
-        in_2: u64,
-        in_3: u64,
-        amp_factor: u64,
-    ) {
-        stable_pool_scripts::create_stable_pool<Asset0, Asset1, Asset2, Asset3>(
-            user,
-            in_0,
-            in_1,
-            in_2,
-            in_3,
-            amp_factor
-        );
-    }
-
-    public fun add_liquidity_stable_entry<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>(
-        user: &signer,
-        in_0: u64,
-        in_1: u64,
-        in_2: u64,
-        in_3: u64,
-    ) {
-        stable_pool_scripts::add_liquidity<Asset0, Asset1, Asset2, Asset3>(
-            user,
-            in_0,
-            in_1,
-            in_2,
-            in_3
-        );
-    }
-
-    public fun remove_liquidity_stable_entry<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>(
-        user: &signer,
-        lp_token_in: u64,
-        min_amount_out_0: u64,
-        min_amount_out_1: u64,
-        min_amount_out_2: u64,
-        min_amount_out_3: u64,
-    ) {
-        stable_pool_scripts::remove_liquidity<Asset0, Asset1, Asset2, Asset3>(
-            user,
-            lp_token_in,
-            min_amount_out_0,
-            min_amount_out_1,
-            min_amount_out_2,
-            min_amount_out_3
-        );
-    }
-
-    public fun swap_exact_in_stable_entry<Asset0, Asset1, Asset2, Asset3, X, Y>(
-        user: &signer,
-        amount_in: u64,
-        min_amount_out: u64,
-    ) {
-        stable_pool_scripts::swap_exact_in<Asset0, Asset1, Asset2, Asset3, X, Y>(
-            user,
-            amount_in,
-            min_amount_out
-        );
-    }
-
-    public fun swap_exact_out_stable_entry<Asset0, Asset1, Asset2, Asset3, X, Y>(
-        user: &signer,
-        max_amount_in: u64,
-        amount_out: u64,
-    ) {
-        stable_pool_scripts::swap_exact_out<Asset0, Asset1, Asset2, Asset3, X, Y>(
-            user,
-            max_amount_in,
-            amount_out
-        );
-    }
+    use thalaswap_v1_interface::stable_pool;
+    use thalaswap_v1_interface::weighted_pool;
 
     // Weighted Methods
 
-    public fun create_weighted_pool<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>(
-        user: &signer,
-        asset_0: Coin<Asset0>,
-        asset_1: Coin<Asset1>,
-        asset_2: Coin<Asset2>,
-        asset_3: Coin<Asset3>
-    ) {
-        weighted_pool::create_weighted_pool<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>(
-            user,
-            asset_0,
-            asset_1,
-            asset_2,
-            asset_3
-        );
-    }
-
-    public fun add_liquidity_weighted<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>(
-        user: &signer,
-        coin_0: Coin<Asset0>,
-        coin_1: Coin<Asset1>,
-        coin_2: Coin<Asset2>,
-        coin_3: Coin<Asset3>
-    ) {
-        let (lp_token, refund_0, refund_1, refund_2, refund_3) = weighted_pool::add_liquidity<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>(coin_0, coin_1, coin_2, coin_3);
-
-        coin::deposit(signer::address_of(user), lp_token);
-        coin::deposit(signer::address_of(user), refund_0);
-        coin::deposit(signer::address_of(user), refund_1);
-        coin::deposit(signer::address_of(user), refund_2);
-        coin::deposit(signer::address_of(user), refund_3);
-    }
-
-    public fun remove_liquidity_weighted<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>(
-        user: &signer,
-        lp_token: Coin<WeightedPoolToken<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>>,
-    ) {
-        let (asset_0, asset_1, asset_2, asset_3) = weighted_pool::remove_liquidity(lp_token);
-
-        coin::deposit(signer::address_of(user), asset_0);
-        coin::deposit(signer::address_of(user), asset_1);
-        coin::deposit(signer::address_of(user), asset_2);
-        coin::deposit(signer::address_of(user), asset_3);
-    }
-
-    public fun swap_exact_in_weighted<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3, X, Y>(
+    public fun swap_x_y_z_weighted<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3, Asset4, Asset5, Asset6, Asset7, Weight4, Weight5, Weight6, Weight7, X, Y, Z>(
         user: &signer,
         amount_in: u64,
-    ) {
-        let asset_in = coin::withdraw<X>(user, amount_in);
-        let asset_out = weighted_pool::swap_exact_in<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3, X, Y>(asset_in);
-
-        coin::deposit(signer::address_of(user), asset_out);
+    ): Coin<Z> {
+        // Swaps between x -> y -> z through pools 0 & 1
+        let x = coin::withdraw<X>(user, amount_in);
+        let y = weighted_pool::swap_exact_in<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3, X, Y>(x);
+        let z = weighted_pool::swap_exact_in<Asset4, Asset5, Asset6, Asset7, Weight4, Weight5, Weight6, Weight7, Y, Z>(y);
+        z
     }
 
-    public fun swap_exact_out_weighted<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3, X, Y>(
-        user: &signer,
-        amount_in: u64,
-        amount_out: u64,
+    fun flash_borrow_x_repay_y_weighted<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>(
+        borrow_amount_0: u64,
+        borrow_amount_1: u64,
+        borrow_amount_2: u64,
+        borrow_amount_3: u64,
     ) {
-        let asset_in = coin::withdraw<X>(user, amount_in);
-        let (refund, asset_out) = weighted_pool::swap_exact_out<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3, X, Y>(asset_in, amount_out);
+        let (borrowed_0, borrowed_1, borrowed_2, borrowed_3, flashloan_receipt) = weighted_pool::flashloan<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>(borrow_amount_0, borrow_amount_1, borrow_amount_2, borrow_amount_3);
+        // turn borrowed into repaid
+        // ...
 
-        coin::deposit(signer::address_of(user), refund);
-        coin::deposit(signer::address_of(user), asset_out);
+        weighted_pool::pay_flashloan<Asset0, Asset1, Asset2, Asset3, Weight0, Weight1, Weight2, Weight3>(borrowed_0, borrowed_1, borrowed_2, borrowed_3, flashloan_receipt);
     }
 
     // Stable Methods
 
-    public fun create_stable_pool<Asset0, Asset1, Asset2, Asset3>(
-        user: &signer,
-        asset_0: Coin<Asset0>,
-        asset_1: Coin<Asset1>,
-        asset_2: Coin<Asset2>,
-        asset_3: Coin<Asset3>,
-        amp_factor: u64,
-    ) {
-        stable_pool::create_stable_pool<Asset0, Asset1, Asset2, Asset3>(
-            user,
-            asset_0,
-            asset_1,
-            asset_2,
-            asset_3,
-            amp_factor
-        );
-    }
-
-    public fun add_liquidity_stable<Asset0, Asset1, Asset2, Asset3>(
-        user: &signer,
-        coin_0: Coin<Asset0>,
-        coin_1: Coin<Asset1>,
-        coin_2: Coin<Asset2>,
-        coin_3: Coin<Asset3>
-    ) {
-        let lp_token = stable_pool::add_liquidity<Asset0, Asset1, Asset2, Asset3>(coin_0, coin_1, coin_2, coin_3);
-
-        coin::deposit(signer::address_of(user), lp_token);
-    }
-
-    public fun remove_liquidity_stable<Asset0, Asset1, Asset2, Asset3>(
-        user: &signer,
-        lp_token: Coin<StablePoolToken<Asset0, Asset1, Asset2, Asset3>>,
-    ) {
-        let (asset_0, asset_1, asset_2, asset_3) = stable_pool::remove_liquidity(lp_token);
-
-        coin::deposit(signer::address_of(user), asset_0);
-        coin::deposit(signer::address_of(user), asset_1);
-        coin::deposit(signer::address_of(user), asset_2);
-        coin::deposit(signer::address_of(user), asset_3);
-    }
-
-    public fun swap_exact_in_stable<Asset0, Asset1, Asset2, Asset3, X, Y>(
+    public fun swap_x_y_z_stable<Asset0, Asset1, Asset2, Asset3, Asset4, Asset5, Asset6, Asset7, X, Y, Z>(
         user: &signer,
         amount_in: u64,
-    ) {
-        let asset_in = coin::withdraw<X>(user, amount_in);
-        let asset_out = stable_pool::swap_exact_in<Asset0, Asset1, Asset2, Asset3, X, Y>(asset_in);
-
-        coin::deposit(signer::address_of(user), asset_out);
+    ): Coin<Z> {
+        // Swaps between x -> y -> z through pools 0 & 1
+        let x = coin::withdraw<X>(user, amount_in);
+        let y = stable_pool::swap_exact_in<Asset0, Asset1, Asset2, Asset3, X, Y>(x);
+        let z = stable_pool::swap_exact_in<Asset4, Asset5, Asset6, Asset7, Y, Z>(y);
+        z
     }
 
-    public fun swap_exact_out_stable<Asset0, Asset1, Asset2, Asset3, X, Y>(
-        user: &signer,
-        amount_in: u64,
-        amount_out: u64,
+    fun flash_borrow_x_repay_y_stable<Asset0, Asset1, Asset2, Asset3>(
+        borrow_amount_0: u64,
+        borrow_amount_1: u64,
+        borrow_amount_2: u64,
+        borrow_amount_3: u64,
     ) {
-        let asset_in = coin::withdraw<X>(user, amount_in);
-        let (refund, asset_out) = stable_pool::swap_exact_out<Asset0, Asset1, Asset2, Asset3, X, Y>(asset_in, amount_out);
+        let (borrowed_0, borrowed_1, borrowed_2, borrowed_3, flashloan_receipt) = stable_pool::flashloan<Asset0, Asset1, Asset2, Asset3>(borrow_amount_0, borrow_amount_1, borrow_amount_2, borrow_amount_3);
+        // turn borrowed into repaid
+        // ...
 
-        coin::deposit(signer::address_of(user), refund);
-        coin::deposit(signer::address_of(user), asset_out);
+        stable_pool::pay_flashloan<Asset0, Asset1, Asset2, Asset3>(borrowed_0, borrowed_1, borrowed_2, borrowed_3, flashloan_receipt);
     }
 }
