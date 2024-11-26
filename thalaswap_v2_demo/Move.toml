@@ -11,5 +11,5 @@ git = "https://github.com/aptos-labs/aptos-core.git"
 rev = "mainnet"
 subdir = "aptos-move/framework/aptos-framework"
 
-[dependencies.ThalaSwapV2Interface]
+[dependencies.ThalaSwapV2]
 local = "../thalaswap_v2_interface/"

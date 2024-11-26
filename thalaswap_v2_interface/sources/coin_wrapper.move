@@ -8,11 +8,11 @@
 ///
 /// users should keep using coin_wrapper methods to interact with thalaswap_v2
 /// until all coins are fully migrated to fungible assets (coin balance = 0).
-module thalaswap_v2_interface::coin_wrapper {
+module thalaswap_v2::coin_wrapper {
     use aptos_framework::object::Object;
     use aptos_framework::fungible_asset::Metadata;
 
-    use thalaswap_v2_interface::pool::Pool;
+    use thalaswap_v2::pool::Pool;
 
     /// A placeholder coin type for native FA assets such as native USDT.
     /// let's say we have a pool <APT, native USDT>, to add liquidity,
