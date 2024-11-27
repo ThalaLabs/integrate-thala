@@ -1,23 +1,41 @@
 # ThalaSwap Integration
 
-This repo is to help you integrate with ThalaSwap V2. There are 2 steps:
-1. Copy [`/thalaswap_v2_interface`](./thalaswap_v2_interface/) to local.
-2. In your project, import it and use the methods provided. See [`/thalaswap_v2_demo`](./thalaswap_v2_demo/) as a reference.
+This repo is to help you integrate with ThalaSwap. There are 2 steps:
+1. Copy [`/thalaswap_v1_interface`](./thalaswap_v1_interface/) or [`/thalaswap_v2_interface`](./thalaswap_v2_interface/) to local.
+2. In your project, import it and use the methods provided. See [`/thalaswap_v1_demo`](./thalaswap_v1_demo/) or [`/thalaswap_v2_demo`](./thalaswap_v2_demo/) as a reference.
 
 ## Contract addresses
+
+ThalaSwapV1: https://explorer.aptoslabs.com/account/0x48271d39d0b05bd6efca2278f22277d6fcc375504f9839fd73f74ace240861af?network=mainnet
 
 ThalaSwapV2: https://explorer.aptoslabs.com/account/0x007730cd28ee1cdc9e999336cbc430f99e7c44397c0aa77516f6f23a78559bb5/transactions?network=mainnet
 
 ThalaSwapLens: https://explorer.aptoslabs.com/account/0xff1ac437457a839f7d07212d789b85dd77b3df00f59613fcba02388464bfcacb/transactions?network=mainnet
 
-## Pool
+## ThalaSwap V1 Concepts
 
-[`pool`](./thalaswap_v2_interface/pool.move) covers core amm logic assuming Fungible Assets.
+### Pools (Base/Stable/Weighted)
+
+[`base_pool`](./thalaswap_v1_interface/sources/base_pool.move) covers common amm pool type parameters.
+
+[`stable_pool`](./thalaswap_v1_interface/sources/stable_pool.move) covers core stable pool amm logic.
+
+[`weighted_pool`](./thalaswap_v1_interface/sources/weighted_pool.move) covers core weighted pool amm logic.
+
+Each pool, weighted or stable, is its own resource under the ThalaSwapv1 resource account, `48271d39d0b05bd6efca2278f22277d6fcc375504f9839fd73f74ace240861af`
+
+Pools are indexed via type params consisting of pool asset & pool weight types. Pool weights are supported in increments of `5`.
+
+## ThalaSwap V2 Concepts
+
+### Pool
+
+[`pool`](./thalaswap_v2_interface/sources/pool.move) covers core amm logic assuming Fungible Assets.
 
 Each pool, either weighed pool or stable pool, is its own object. Pool addresses
 can be found in either `ThalaSwapV2::pool::pools()` or `ThalaSwapLens::lens::get_pools_info()`.
 
-## Coin Wrapper
+### Coin Wrapper
 
 While `pool` covers core amm logic assuming Fungible Assets, any coin-specific logic
 is left for [`coin_wrapper`](./thalaswap_v2_interface/coin_wrapper.move).
