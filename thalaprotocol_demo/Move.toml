@@ -1,0 +1,15 @@
+[package]
+name = "ThalaProtocolDemo"
+version = "1.0.0"
+authors = []
+
+[addresses]
+thalaprotocol_demo = "0xABC"
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "mainnet"
+subdir = "aptos-move/framework/aptos-framework"
+
+[dependencies.ThalaProtocolInterface]
+local = "../thalaprotocol_interface/"

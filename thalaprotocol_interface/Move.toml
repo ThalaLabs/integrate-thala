@@ -1,0 +1,26 @@
+[package]
+name = "ThalaProtocolInterface"
+version = "1.0.0"
+
+[addresses]
+thalaprotocol_interface = "48271d39d0b05bd6efca2278f22277d6fcc375504f9839fd73f74ace240861af"
+thalaprotocol_interface_deployer = "1bf23f0881f8fa149500ff6b7a047f608967c028a8ad7a2100caa84833ce851d"
+
+[dependencies.MoveStdlib]
+git = "https://github.com/aptos-labs/aptos-core.git"
+subdir = "aptos-move/framework/move-stdlib"
+rev = "mainnet"
+
+[dependencies.AptosStdlib]
+git = "https://github.com/aptos-labs/aptos-core.git"
+subdir = "aptos-move/framework/aptos-stdlib"
+rev = "mainnet"
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-core.git"
+subdir = "aptos-move/framework/aptos-framework"
+rev = "mainnet"
+
+[dependencies.FixedPoint64]
+git = "https://github.com/ThalaLabs/fixed_point64.git"
+rev = "main"
