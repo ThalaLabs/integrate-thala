@@ -1,4 +1,4 @@
-module thalaprotocol_interface::psm_v2 {
+module thala_protocol_interface::psm_v2 {
     use aptos_framework::fungible_asset::{FungibleAsset, Metadata};
     use aptos_framework::object::{Object, ExtendRef};
 
@@ -76,61 +76,81 @@ module thalaprotocol_interface::psm_v2 {
         abort 0
     }
 
+    /// Get the balance of the PSM's exchange asset.
     #[view]
     public fun balance(_psm_obj: Object<PSM>): u64 {
         abort 0
     }
 
+    /// Get the number of MOD tokens minted out of the PSM.
     #[view]
     public fun mod_minted(_psm_obj: Object<PSM>): u64 {
         abort 0
     }
 
+    /// Get the number of MOD tokens that can be minted out of the PSM.
     #[view]
     public fun mintable_mod(_psm_obj: Object<PSM>): u64 {
         abort 0
     }
 
+    /// Get the number of MOD tokens that can be minted out of the PSM, taking into account any rate limiting.
+    /// 
+    /// This is preferred over `mintable_mod` because it takes into account the rate limiter.
     #[view]
     public fun mintable_mod_rate_limited(_psm_obj: Object<PSM>): u64 {
         abort 0
     }
 
+    /// Get the number of MOD tokens that can be redeemed from the PSM.
     #[view]
     public fun redeemable_mod(_psm_obj: Object<PSM>): u64 {
         abort 0
     }
 
+    /// Get the number of MOD tokens that can be redeemed from the PSM, taking into account any rate limiting.
+    /// 
+    /// This is preferred over `redeemable_mod` because it takes into account the rate limiter.
     #[view]
     public fun redeemable_mod_rate_limited(_psm_obj: Object<PSM>): u64 {
         abort 0
     }
 
+    /// Get the mint cap of the PSM (maximum number of MOD tokens that can be minted out of the PSM).
     #[view]
     public fun mint_cap(_psm_obj: Object<PSM>): u64 {
         abort 0
     }
 
+    /// Get the mint fee and redemption fee of the PSM.
+    /// 
+    /// Returns (mint_fee_bps, redemption_fee_bps)
     #[view]
     public fun psm_fees(_psm_obj: Object<PSM>): (u64, u64) {
         abort 0
     }
 
+    /// Get the status of the PSM (whether it is open for minting and redeeming).
     #[view]
     public fun psm_open(_psm_obj: Object<PSM>): bool {
         abort 0
     }
 
+    /// Returns true if minting is paused, false otherwise.
     #[view]
     public fun mint_paused(): bool {
         abort 0
     }
 
+    /// Returns true if redeeming is paused, false otherwise.
     #[view]
     public fun redeem_paused(): bool {
         abort 0
     }
 
+    /// Get the rate limiter config of the PSM.
+    /// 
+    /// Returns (mint_window_duration_seconds, max_mint_per_window, redemption_window_duration_seconds, max_redeem_per_window)
     #[view]
     public fun psm_rate_limiter_config(_psm_obj: Object<PSM>): (u64, u128, u64, u128) {
         abort 0

@@ -8,12 +8,11 @@ This repo is to help you integrate with ThalaSwap and/or ThalaProtocol. There ar
 
 ThalaSwapV1: https://explorer.aptoslabs.com/account/0x48271d39d0b05bd6efca2278f22277d6fcc375504f9839fd73f74ace240861af?network=mainnet
 
-ThalaSwapV2: https://explorer.aptoslabs.com/account/0x007730cd28ee1cdc9e999336cbc430f99e7c44397c0aa77516f6f23a78559bb5/transactions?network=mainnet
+ThalaSwapV2: https://explorer.aptoslabs.com/account/0x007730cd28ee1cdc9e999336cbc430f99e7c44397c0aa77516f6f23a78559bb5?network=mainnet
 
-ThalaSwapLens: https://explorer.aptoslabs.com/account/0xff1ac437457a839f7d07212d789b85dd77b3df00f59613fcba02388464bfcacb/transactions?network=mainnet
+ThalaSwapLens: https://explorer.aptoslabs.com/account/0xff1ac437457a839f7d07212d789b85dd77b3df00f59613fcba02388464bfcacb?network=mainnet
 
-TODO: Add ThalaProtocol
-ThalaProtocol: ...
+ThalaProtocol: https://explorer.aptoslabs.com/account/0x6f986d146e4a90b828d8c12c14b6f4e003fdff11a8eecceceb63744363eaac01?network=mainnet
 
 ## ThalaSwap V1 Concepts
 
@@ -76,6 +75,6 @@ as the type argument, and the FA metadata in `assets_metadata`. For example:
 
 ### PSM V2
 
-[`psm_v2`](./thalaprotocol_interface/sources/psm_v2.move) covers core PSM mint and redeem logic.
+[`psm_v2`](./thala_protocol_interface/sources/psm_v2.move) covers core PSM mint and redeem logic.
 
 Each PSM is its own object. PSM address for a given exchange asset can be found using `ThalaProtocol::psm_v2::psm_address(exchange_asset_metadata)`.
